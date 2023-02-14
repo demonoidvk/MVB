@@ -19,10 +19,10 @@ Parts of the SRC file:
             if a new node is added, generating a node_id and writing blockchain data in a final ledger file.
             
 How to run the code:
-1. run as many instances of NodeMain, as it will start 3 different threads per instance(new txn listener, broadcaster, compute engine)
+1. run as many instances of NodeMain(through different terminals), as it will start 3 different threads per instance(new txn listener, broadcaster, compute engine)
 2. Once all nodes are running, start the InputAndWrite, with syntax: python InputAndWrite.py "{\"sender\": \"J.J.\", \"reciever\": \"A.J\", \"message\": \"a\"}" 2
        here: 1st command line argument will be the message
-       2nd witll be the node to which to send the message to.
+            2nd witll be the node to which to send the message to.
        
        
 Parts left for develment:
