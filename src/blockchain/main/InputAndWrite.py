@@ -1,3 +1,4 @@
+import json
 import sys
 import os
 from src.blockchain.utility import util
@@ -14,8 +15,9 @@ def write_if_empty(data):
 
 def main():
     data = {"message": sys.argv[1], "node": sys.argv[2]}
-    msg = dict(sys.argv[1])
-    filename = str(int(sys.argv[2])) + "--" + "inputMessages.json"
+    msg = json.loads(sys.argv[1])
+    node_id = str(int(sys.argv[2]))
+    filename = node_id + "--" + "inputMessages.json"
     if os.path.isfile(filename) and os.path.getsize(filename) > 0:
         json_data = util.read_json_data_from_file(filename)
         if json_data and len(json_data) > 0:
@@ -25,11 +27,16 @@ def main():
             outer_level["data"] = file_data
         else:
             outer_level = write_if_empty(data)
+
+        transaction = UnCommittedTransaction(msg.get("sender"), msg.get("reciever"), msg.get("message"))
+        message = {"txn": transaction, "node_id": node_id}
+        send_message(message)
         util.write_json_data_to_file(filename, outer_level)
     else:
         outer_level = write_if_empty(data)
         transaction = UnCommittedTransaction(msg.get("sender"), msg.get("reciever"), msg.get("message"))
-        send_message(transaction)
+        message = {"txn": transaction, "node_id": node_id}
+        send_message(message)
         util.write_json_data_to_file(filename, outer_level)
 
 
